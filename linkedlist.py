@@ -1,41 +1,78 @@
 class Node:
-    def __init__(self, data=None, next=None):
-        self.data = data
-        self.next = next
+    def __init__(self, data):
+        self.data=data
+        self.ref = None
 
 class LinkedList:
     def __init__(self):
-        self.head = None
-    
-    def insert_at_beginning(self, data):
-        node = Node(data, self.head)
-        self.head = node
-        
-    def print(self):
+        self.head=None
+    def print_LL(self):
         if self.head is None:
-            print("Linked list is empty.")
+            print("Linked list is empty!")
+        else:
+            n=self.head
+            while n is not None:
+                print(n.data,"--->",end=" ")
+                n=n.ref
+            print("None")
+
+    def add_begin(self,data):
+        new_node = Node(data)
+        new_node.ref = self.head
+        self.head = new_node
+
+
+    def add_end(self,data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+        else:
+            n = self.head
+            while n.ref is not None:
+                n = n.ref
+            n.ref = new_node
+    def add_after(self,data,x):
+        n=self.head
+        while n is not None:
+            if x==n.data:
+                break
+            n = n.ref
+        if n is None:
+            print("node is not present")
+        else:
+            new_node=Node(data)
+            new_node.ref = n.ref
+            n.ref = new_node
+
+
+    def add_before(self,data,x):
+        if self.head is None:
+            print("Linked List is empty!")
             return
-        
-        itr = self.head
-        llstr = ''
-        while itr:
-            llstr += str(itr.data) + ' --> '
-            itr = itr.next
-        llstr += 'None'
-        print(llstr)
-    def insert_at_end(self,data):
-        if self.head is None:
-            self.head=Node(data,None)
-            return 
-        itr = self.head
-        while itr.next:
-            itr = itr.next
-        itr.next = Node(data,None)
+        if self.head.data==x:
+            new_node = Node(data)
+            new_node.ref = self.head
+            self.head = new_node
+            return
+        n = self.head
+        while n.ref is not None:
+            if n.ref.data==x:
+                break
+            n = n.ref        
+        if n.ref is None:
+            print("Node is not found!")
+        else:
+            new_node = Node(data)
+            new_node.ref = n.ref
+            n.ref = new_node           
 
 
-if __name__ == '__main__':
-    ll = LinkedList()
-    ll.insert_at_beginning(5)
-    ll.insert_at_beginning(85)
-    ll.insert_at_end(79)
-    ll.print()
+ll1=LinkedList()
+ll1.add_begin(10)
+ll1.add_end(50)
+ll1.add_end(500)
+ll1.add_begin(20)
+ll1.add_begin(100)
+ll1.add_after(1,1000)
+ll1.add_before(50,90)
+ll1.print_LL()
